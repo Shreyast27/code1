@@ -1,0 +1,6 @@
+//NET "a" LOC=p22;
+//NET "b" LOC=p21;
+NET "clk" LOC = p84;
+NET "led" LOC= p139;
+NET "pushbutton" LOC = P44;
+//NET "buz" LOC=p85;
