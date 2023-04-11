@@ -1,0 +1,23 @@
+module clockdivider(clk_20ns, clk_1s_divideby2, clk_1s_divideby4, clk_1s_divideby8, rst);
+input clk_20ns, rst;
+reg [31:0] count;
+output clk_1s_divideby2, clk_1s_divideby4, clk_1s_divideby8;
+reg clk_1s_divideby2, clk_1s_divideby4, clk_1s_divideby8;
+parameter CLK_PERIOD_NS = 20;
+parameter CLK_PERIOD_1S = 1000000000;
+
+always @(posedge clk_20ns) begin
+  if (rst == 1'b1) begin
+    count <= 32'd0;
+    clk_1s_divideby2 <= 1'b0;
+    clk_1s_divideby4 <= 1'b0;
+    clk_1s_divideby8 <= 1'b0;
+  end else begin
+    count <= count + 1;
+    clk_1s_divideby2 <= (count >= (CLK_PERIOD_1S / (2 * CLK_PERIOD_NS))) ? ~clk_1s_divideby2 : clk_1s_divideby2;
+    clk_1s_divideby4 <= (count >= (CLK_PERIOD_1S / (4 * CLK_PERIOD_NS))) ? ~clk_1s_divideby4 : clk_1s_divideby4;
+    clk_1s_divideby8 <= (count >= (CLK_PERIOD_1S / (8 * CLK_PERIOD_NS))) ? ~clk_1s_divideby8 : clk_1s_divideby8;
+  end
+end
+
+endmodule
